@@ -1,6 +1,7 @@
-package udemy.javaclass.variables.IntShortByteLong;
+package Udemy.CompleteJavaMasterclass.VariablesDataTypesOperators.IntShortByteLong;
 
-public class Main {
+public class IntShortByteLong 
+{
 
     public static void main(String[] args)
     {
