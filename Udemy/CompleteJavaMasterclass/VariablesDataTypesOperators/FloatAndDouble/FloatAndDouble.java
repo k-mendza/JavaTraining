@@ -1,10 +1,11 @@
-package udemy.javaclass.variables.FloatAndDouble;
+package Udemy.CompleteJavaMasterclass.VariablesDataTypesOperators.FloatAndDouble;
 
-public class Main {
+public class FloatAndDouble
+{
 
     public static void main(String[] args)
 	{
-    // this is comment
+    	// this is comment
 	// declaration of INT variable
 	int myIntValue = 5 / 3;
 	// declaration of FLOAT variable
