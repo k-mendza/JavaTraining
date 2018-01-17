@@ -1,4 +1,4 @@
-package Udemy.CompleteJavaMasterclass.VariablesDataTypesOperators;
+package Udemy.CompleteJavaMasterclass.VariablesDataTypesOperators.Operators;
 
 public class Operators
 {
