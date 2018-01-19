@@ -26,5 +26,27 @@ public class WhileLoop
             System.out.println("Count value was " + count);
             count++;
         }while (count !=6);
+
+
+        int start = 1;
+        int stop = 30;
+        int counter = 0;
+        while (start <= stop && counter != 5){
+            if (isEvenNumber(start) == true)
+            {
+                System.out.println(start);
+                counter++;
+            }
+            start++;
+        }
+
+    }
+    public static boolean isEvenNumber(int number){
+        if ((number % 2) == 0){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
