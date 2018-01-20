@@ -8,7 +8,17 @@ public class Account
     private String accountEmail;
     private String accountPhoneNumber;
 
+    // in IDEA it is possible to create setters getters and constructors automaticall
+    public Account(String accountName, String accountEmail, String accountPhoneNumber) {
+        this.accountNumber = "9999";
+        this.accountBalance = 0.0;
+        this.accountName = accountName;
+        this.accountEmail = accountEmail;
+        this.accountPhoneNumber = accountPhoneNumber;
+    }
+
     public Account(){
+
         this("Default",0,"Default","Default","Default");
         System.out.println("Empty constructor call");
     }
