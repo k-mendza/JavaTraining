@@ -10,9 +10,13 @@ public class Bank {
         this.name = name;
         this.branchArrayList = new ArrayList<Branch>();
     }
-    public void addBranch(String branchName){
-        if (findBranch(branchName) == null){
+
+    public boolean addBranch(String branchName) {
+        if (this.findBranch(branchName) == null) {
             this.branchArrayList.add(new Branch(branchName));
+            return true;
+        } else {
+            return false;
         }
     }
 
