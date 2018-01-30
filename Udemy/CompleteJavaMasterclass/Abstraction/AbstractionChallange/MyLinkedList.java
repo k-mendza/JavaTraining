@@ -9,7 +9,7 @@ public class MyLinkedList implements INodeList{
 
     @Override
     public ListItem getRoot() {
-        return null;
+        return this.root;
     }
 
     @Override
@@ -44,6 +44,7 @@ public class MyLinkedList implements INodeList{
             return true;
         } else {
             System.out.println(item.getValue() + " is present in the list");
+            return false;
         }
     }
     return false;
