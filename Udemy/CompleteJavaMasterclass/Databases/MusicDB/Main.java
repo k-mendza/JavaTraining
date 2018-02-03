@@ -1,6 +1,9 @@
 package Udemy.CompleteJavaMasterclass.MusicDB;
 
+import Udemy.CompleteJavaMasterclass.MusicDB.model.Artist;
 import Udemy.CompleteJavaMasterclass.MusicDB.model.DataSource;
+
+import java.util.List;
 
 public class Main {
 
@@ -9,6 +12,14 @@ public class Main {
         if (!dataSource.open()){
             System.out.println("Cant open datasource");
             return;
+        }
+        List<Artist> artists = dataSource.queryArtists(DataSource.ORDER_BY_ASC);
+        if (artists == null) {
+            System.out.println("No artists!");
+            return;
+        }
+        for (Artist artist : artists){
+            System.out.println("ID= " + artist.getId() + ", Name = " + artist.getName());
         }
         dataSource.close();
     }
