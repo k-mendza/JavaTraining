@@ -27,7 +27,7 @@ public class Main {
             System.out.println(album);
         }
 
-        List<SongArtist> songArtists = dataSource.queryArtistForSong("Go Your Own Way", DataSource.ORDER_BY_ASC);
+        List<SongArtist> songArtists = dataSource.queryArtistsForSong("Go Your Own Way", DataSource.ORDER_BY_ASC);
         if (songArtists == null){
             System.out.println("Could not return query");
             return;
@@ -40,6 +40,17 @@ public class Main {
 
         System.out.println("Number of songs is: " + count);
         dataSource.createViewForSongArtists();
+
+        songArtists = dataSource.querySongInfoView("She's On Fire");
+        if(songArtists.isEmpty()){
+            System.out.println("Could not find artists for this song");
+            return;
+        }
+        for (SongArtist artist : songArtists) {
+            System.out.println("FROM VIEW - Artist name = " + artist.getArtistName() + " Album name = " +
+            artist.getAlbumName() + " Track number = " + artist.getTrack());
+        }
+
         dataSource.close();
     }
 }
