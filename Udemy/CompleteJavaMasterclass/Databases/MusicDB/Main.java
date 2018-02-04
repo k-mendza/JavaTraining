@@ -5,6 +5,7 @@ import Udemy.CompleteJavaMasterclass.MusicDB.model.DataSource;
 import Udemy.CompleteJavaMasterclass.MusicDB.model.SongArtist;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
@@ -41,7 +42,10 @@ public class Main {
         System.out.println("Number of songs is: " + count);
         dataSource.createViewForSongArtists();
 
-        songArtists = dataSource.querySongInfoView("She's On Fire");
+        Scanner s = new Scanner(System.in);
+        System.out.println("Enter a song title: ");
+        String title = s.nextLine();
+        songArtists = dataSource.querySongInfoView(title);
         if(songArtists.isEmpty()){
             System.out.println("Could not find artists for this song");
             return;
