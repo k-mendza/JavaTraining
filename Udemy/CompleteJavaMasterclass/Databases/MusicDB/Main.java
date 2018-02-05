@@ -42,18 +42,19 @@ public class Main {
         System.out.println("Number of songs is: " + count);
         dataSource.createViewForSongArtists();
 
-        Scanner s = new Scanner(System.in);
-        System.out.println("Enter a song title: ");
-        String title = s.nextLine();
-        songArtists = dataSource.querySongInfoView(title);
-        if(songArtists.isEmpty()){
-            System.out.println("Could not find artists for this song");
-            return;
-        }
-        for (SongArtist artist : songArtists) {
-            System.out.println("FROM VIEW - Artist name = " + artist.getArtistName() + " Album name = " +
-            artist.getAlbumName() + " Track number = " + artist.getTrack());
-        }
+//        Scanner s = new Scanner(System.in);
+//        System.out.println("Enter a song title: ");
+//        String title = s.nextLine();
+//        songArtists = dataSource.querySongInfoView(title);
+//        if(songArtists.isEmpty()){
+//            System.out.println("Could not find artists for this song");
+//            return;
+//        }
+//        for (SongArtist artist : songArtists) {
+//            System.out.println("FROM VIEW - Artist name = " + artist.getArtistName() + " Album name = " +
+//            artist.getAlbumName() + " Track number = " + artist.getTrack());
+//        }ccg
+        dataSource.insertSong("Touch of Grey", "Grateful Dead", "In The Dark",1);
 
         dataSource.close();
     }
