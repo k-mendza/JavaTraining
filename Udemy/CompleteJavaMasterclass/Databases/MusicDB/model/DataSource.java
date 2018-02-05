@@ -328,4 +328,80 @@ public class DataSource {
                 return null;
             }
         }
-    }
+
+        private int insertArtist(String name) throws SQLException {
+            queryArtist.setString(1, name);
+            ResultSet results = queryArtist.executeQuery();
+            if (results.next()) {
+                return results.getInt(1);
+            } else {
+                insertIntoArtists.setString(1, name);
+                int affectedRows = insertIntoArtists.executeUpdate();
+                if (affectedRows != 1){
+                    throw new SQLException("Could not insert artist");
+                }
+
+                ResultSet generatedKeys = insertIntoArtists.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Could not get _id for artist");
+                }
+            }
+        }
+        private int insertAlbum(String name,int artistId) throws SQLException {
+            queryAlbum.setString(1, name);
+            ResultSet results = queryAlbum.executeQuery();
+            if (results.next()) {
+                return results.getInt(1);
+            } else {
+                insertIntoAlbums.setString(1, name);
+                insertIntoAlbums.setInt(2, artistId);
+                int affectedRows = insertIntoAlbums.executeUpdate();
+
+                if (affectedRows != 1){
+                    throw new SQLException("Could not insert album");
+                }
+
+                ResultSet generatedKeys = insertIntoAlbums.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Could not get _id for album");
+                }
+            }
+        }
+        private void insertSong(String title,String artist, String album, int track){
+            try{
+                conn.setAutoCommit(false);
+
+                int artistId = insertArtist(artist);
+                int albumId = insertAlbum(album, artistId);
+                insertIntoSongs.setInt(1, track);
+                insertIntoSongs.setString(2, title);
+                insertIntoSongs.setInt(3, albumId);
+                int affectedRows = insertIntoSongs.executeUpdate();
+                if (affectedRows == 1){
+                        conn.commit();
+                    } else  {
+                    throw new SQLException("The song insert failed");
+                }
+            } catch (SQLException e){
+                System.out.println("Insert song exception " + e.getMessage());
+                try {
+                    System.out.println("Performing rollback");
+                    conn.rollback();
+                } catch (SQLException e2){
+                    System.out.println("Error while performing rollback: " + e2.getMessage());
+                }
+            } finally {
+                try{
+                    System.out.println("Resetting default commit behaviour");
+                    conn.setAutoCommit(true);
+                } catch (SQLException e3){
+                    System.out.println("Could not reser auto-commit");
+                }
+            }
+
+        }
+}
