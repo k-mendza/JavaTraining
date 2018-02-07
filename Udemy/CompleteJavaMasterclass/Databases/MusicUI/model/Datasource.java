@@ -1,5 +1,7 @@
 package sample.model;
 
+import javafx.scene.control.TableColumnBase;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +106,9 @@ public class Datasource {
     public static final String QUERY_ALBUMS_BY_ARTIST_ID = "SELECT * FROM " + TABLE_ALBUMS +
             " WHERE " + COLUMN_ALBUM_ARTIST + " = ? ORDER BY " + COLUMN_ALBUM_NAME + " COLLATE NOCASE";
 
+    public static final String UPDATE_ARTIST_NAME = "UPDATE " + TABLE_ARTISTS + " SET " +
+            COLUMN_ARTIST_NAME + " = ? WHERE " + COLUMN_ARTIST_ID + " = ?";
+
     private Connection conn;
 
     private PreparedStatement querySongInfoView;
@@ -115,6 +120,7 @@ public class Datasource {
     private PreparedStatement queryArtist;
     private PreparedStatement queryAlbum;
     private PreparedStatement queryAlbumsByArtistId;
+    private PreparedStatement updateArtistName;
     private static Datasource instance = new Datasource();
 
     private Datasource() {
@@ -135,7 +141,7 @@ public class Datasource {
             queryArtist = conn.prepareStatement(QUERY_ARTIST);
             queryAlbum = conn.prepareStatement(QUERY_ALBUM);
             queryAlbumsByArtistId = conn.prepareStatement(QUERY_ALBUMS_BY_ARTIST_ID);
-
+            updateArtistName = conn.prepareStatement(UPDATE_ARTIST_NAME);
             return true;
         } catch (SQLException e) {
             System.out.println("Couldn't connect to database: " + e.getMessage());
@@ -176,6 +182,9 @@ public class Datasource {
             if (queryAlbumsByArtistId != null){
                 conn.close();
             }
+            if (updateArtistName != null){
+                conn.close();
+            }
         } catch (SQLException e) {
             System.out.println("Couldn't close connection: " + e.getMessage());
         }
@@ -201,6 +210,11 @@ public class Datasource {
 
             List<Artist> artists = new ArrayList<>();
             while (results.next()) {
+                try {
+                    Thread.sleep(15);
+                }catch (InterruptedException e) {
+                    System.out.println("Interrupted " + e.getLocalizedMessage());
+                }
                 Artist artist = new Artist();
                 artist.setId(results.getInt(INDEX_ARTIST_ID));
                 artist.setName(results.getString(INDEX_ARTIST_NAME));
@@ -210,6 +224,25 @@ public class Datasource {
             return artists;
 
         } catch (SQLException e) {
+            System.out.println("Query failed: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public List<Album> queryAlbumsForArtistId(int id) {
+        try {
+            queryAlbumsByArtistId.setInt(1, id);
+            ResultSet results = queryAlbumsByArtistId.executeQuery();
+            List<Album> albums = new ArrayList<>();
+            while (results.next()){
+                Album album = new Album();
+                album.setId(results.getInt(1));
+                album.setName(results.getString(2));
+                album.setArtistId(id);
+                albums.add(album);
+            }
+            return albums;
+        } catch (SQLException e){
             System.out.println("Query failed: " + e.getMessage());
             return null;
         }
@@ -342,6 +375,18 @@ public class Datasource {
         }
     }
 
+    public boolean updateArtistName(int id, String newName){
+        try{
+            updateArtistName.setString(1, newName);
+            updateArtistName.setInt(2, id);
+            int affectedRecords = updateArtistName.executeUpdate();
+            return affectedRecords == 1;
+        } catch (SQLException e){
+            System.out.println("Update failed: " + e.getMessage());
+            return false;
+        }
+    }
+
     public void insertSong(String title, String artist, String album, int track) {
 
         try {
@@ -374,7 +419,6 @@ public class Datasource {
             } catch(SQLException e) {
                 System.out.println("Couldn't reset auto-commit! " + e.getMessage());
             }
-
         }
     }
 }
