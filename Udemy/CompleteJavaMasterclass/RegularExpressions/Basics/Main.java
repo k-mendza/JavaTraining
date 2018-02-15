@@ -87,6 +87,84 @@ public class Main {
             System.out.println("Occurrence " + h2TextMatcher.group(2));
         }
 
+        String newString = "Harry";
+        System.out.println(newString.replaceAll("[H|h]arry", "Larry")); // consider H or h as match
 
+        String tvTest = "tstvtkt";
+        //String tNotRegExp = "t[^v]";
+        String tNotRegExp = "t(?!v)";
+        Pattern tNotVPattern = Pattern.compile(tNotRegExp);
+        Matcher tNotVMatcher = tNotVPattern.matcher(tvTest);
+
+        count = 0;
+        while (tNotVMatcher.find()){
+            count++;
+            System.out.println("Occurrence " + count + " : " + tNotVMatcher.start() + " to " + tNotVMatcher.end());
+        }
+
+        String phone1 = "123456789";
+        String phone2 = "(123) 456-7890";
+        String phone3 = "123 456-7890";
+        String phone4 = "(123)456-7890";
+
+        System.out.println("phone1 = " + phone1.matches("^([\\(]{1}[0-9]{3}[\\)]{1}[ ]{1}[0-9]{3}[\\-]{1}[0-9]{4})$"));
+        System.out.println("phone2 = " + phone2.matches("^([\\(]{1}[0-9]{3}[\\)]{1}[ ]{1}[0-9]{3}[\\-]{1}[0-9]{4})$"));
+        System.out.println("phone3 = " + phone3.matches("^([\\(]{1}[0-9]{3}[\\)]{1}[ ]{1}[0-9]{3}[\\-]{1}[0-9]{4})$"));
+        System.out.println("phone4 = " + phone4.matches("^([\\(]{1}[0-9]{3}[\\)]{1}[ ]{1}[0-9]{3}[\\-]{1}[0-9]{4})$"));
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
