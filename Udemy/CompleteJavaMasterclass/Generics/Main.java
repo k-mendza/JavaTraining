@@ -20,12 +20,19 @@ public class Main {
         BaseballPlayer pat = new BaseballPlayer("Pat");
         SoccerPlayer ronaldo = new SoccerPlayer("Ronaldo");
         // team will accept all players!
-        Team myTeam = new Team("My Super Team");
+        Team<FootballPlayer> myTeam = new Team<>("Football Team");
         myTeam.addPlayer(joe);
-        myTeam.addPlayer(pat);
-        myTeam.addPlayer(ronaldo);
+//        myTeam.addPlayer(pat);
+//        myTeam.addPlayer(ronaldo);
 
         System.out.println(myTeam.numPlayers());
+
+        Team<BaseballPlayer> baseballTeam = new Team<>("Baseball team");
+        baseballTeam.addPlayer(pat);
+
+        Team<FootballPlayer> notMyTeam = new Team<>("Not my team");
+
+        myTeam.matchResult(notMyTeam , 3, 0);
 
     }
 //    private static void printDoubled(ArrayList<Integer> n){
