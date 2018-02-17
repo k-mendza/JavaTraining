@@ -57,5 +57,16 @@ public class Challenge {
         while (matcher11.find()){
             System.out.println("Occurrence " + matcher11.group(1));
         }
+
+        String challenge12 = "11111";
+        System.out.println(challenge12.matches("^\\d{5}$"));
+
+        String challenge13 = "11111-1111";
+        System.out.println(challenge13.matches("^\\d{5}-\\d{4}$"));
+
+        String regExp14 = "^\\d{5}(-\\d{4})?$";
+        System.out.println("*************");
+        System.out.println(challenge12.matches(regExp14));
+        System.out.println(challenge13.matches(regExp14));
     }
 }
