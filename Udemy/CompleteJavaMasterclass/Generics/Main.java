@@ -33,7 +33,16 @@ public class Main {
         Team<FootballPlayer> notMyTeam = new Team<>("Not my team");
 
         myTeam.matchResult(notMyTeam , 3, 0);
+        myTeam.matchResult(baseballTeam , 2, 1);
 
+
+        System.out.println("Rankings:");
+        System.out.println(myTeam.getName() + ": " + myTeam.ranking());
+        System.out.println(notMyTeam.getName() + ": " + notMyTeam.ranking());
+        System.out.println(baseballTeam.getName() + ": " + baseballTeam.ranking());
+
+        System.out.println(myTeam.compareTo(notMyTeam));
+        System.out.println(notMyTeam.compareTo(myTeam));
     }
 //    private static void printDoubled(ArrayList<Integer> n){
 //        for (Object i : n){
