@@ -9,4 +9,12 @@ public class StringUtilities {
         charsAdded++;
     }
 
+    public String upperAndPrefix(String str){
+        String upper = str.toUpperCase();
+        return "Prefix_" + upper;
+    }
+
+    public String addSuffix(String str){
+        return str + "_Suffix";
+    }
 }
