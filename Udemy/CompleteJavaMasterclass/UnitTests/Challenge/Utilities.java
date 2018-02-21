@@ -17,6 +17,11 @@ public class Utilities {
     }
 
     public String removePairs(String source){
+
+        if (source.length() == 0){
+            return source;
+        }
+
         StringBuilder sb = new StringBuilder();
         char[] string = source.toCharArray();
 
