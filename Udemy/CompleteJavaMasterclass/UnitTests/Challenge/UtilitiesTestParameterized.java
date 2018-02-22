@@ -18,7 +18,7 @@ public class UtilitiesTestParameterized {
 
     public UtilitiesTestParameterized(String input, String otput) {
         this.input = input;
-        this.output = otput;
+        this.output = output;
     }
 
     @Before
