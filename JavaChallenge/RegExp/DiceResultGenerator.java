@@ -36,7 +36,7 @@ public class DiceResultGenerator {
                 }
                 // the number of dices is now defined. There is need to also define what kind of dice to use
                 // this variable is present between "D" and "-". This can be achieved by another regular expression
-
+                // TODO regexp for type of the dice and the rest
                 System.out.println(s.nextInt());
             }
             s.close();
