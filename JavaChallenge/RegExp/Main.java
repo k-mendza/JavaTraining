@@ -9,6 +9,8 @@ public class Main {
         //diceResultGenerator.diceRoll("20D4+5");
         diceResultGenerator.diceRoll("20D4-37");
         diceResultGenerator.diceRoll("D4-55");
+        diceResultGenerator.diceRoll("D3-55");
+        diceResultGenerator.diceRoll("12D3-55");
     }
 
 }

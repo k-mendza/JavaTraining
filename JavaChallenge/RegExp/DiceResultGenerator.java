@@ -6,6 +6,7 @@ public class DiceResultGenerator {
 
     private int numberOfDices;
     private int diceType;
+    private int modifier;
 
     public DiceResultGenerator() {
     }
@@ -29,15 +30,39 @@ public class DiceResultGenerator {
                 Scanner sNumberOfDices = new Scanner(source).useDelimiter("D");
                 if (sNumberOfDices.hasNextInt()){
                     numberOfDices = sNumberOfDices.nextInt();
-                    System.out.println(numberOfDices);
+                    System.out.println("Number of dices: " + numberOfDices);
                 } else {
                     numberOfDices = 1;
-                    System.out.println(numberOfDices);
+                    System.out.println("Number of dices: " + numberOfDices);
                 }
                 // the number of dices is now defined. There is need to also define what kind of dice to use
                 // this variable is present between "D" and "-". This can be achieved by another regular expression
-                // TODO regexp for type of the dice and the rest
-                System.out.println(s.nextInt());
+                // TODO make following code another private function and call it here:
+                if (source.matches(".*D3.*")){
+                    diceType = 3;
+                } else if (source.matches(".*D4.*")) {
+                    diceType = 4;
+                } else if (source.matches(".*D6.*")) {
+                    diceType = 6;
+                } else if (source.matches(".*D8.*")) {
+                    diceType = 8;
+                } else if (source.matches(".*D10.*")) {
+                    diceType = 10;
+                } else if (source.matches(".*D12.*")) {
+                    diceType = 12;
+                } else if (source.matches(".*D20.*")) {
+                    diceType = 20;
+                } else if (source.matches(".*D100.*")) {
+                    diceType = 100;
+                }
+
+                System.out.println("Type of dice: D" + diceType);
+                // still extraction of additional number is required. its done by another scanner
+                Scanner sc = new Scanner(source).useDelimiter("-");
+                if (sc.hasNextInt()){
+                    modifier = sc.nextInt();
+                    System.out.println("Modifier:" + modifier);
+                }
             }
             s.close();
             return 1;
