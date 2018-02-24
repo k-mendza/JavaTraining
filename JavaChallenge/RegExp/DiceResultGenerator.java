@@ -23,13 +23,16 @@ public class DiceResultGenerator {
             if (sNumberOfDices.hasNextInt()) {
                 System.out.println("Number of dices: " + numberOfDices);
                 numberOfDices = sNumberOfDices.nextInt();
+                sNumberOfDices.close();
             } else {
                 System.out.println("Number of dices: " + numberOfDices);
                 numberOfDices = 1;
+                sNumberOfDices.close();
             }
         } else {
             System.out.println("This is not a correct String!");
         }
+
     }
 
     private void diceType(String source) {
@@ -57,25 +60,21 @@ public class DiceResultGenerator {
         }
     }
 
-    private void throwModifier(String source) {
-
-        String pattern = "(\\d+)?D(3|4|6|8|100|12|20|10)((\\+|-)\\d+)?";
-
-        if (source.matches(pattern)) {
+    public void throwModifier(String source) {
+        if (checkCommand(source)) {
             // here the input String meets requirements of regular expression
             // now it has to be decided is there + or - in the expression
             Scanner s = new Scanner(source).useDelimiter("");
-            if (s.findInLine("-") != null || s.findInLine("\\+") != null) {
-
-                // TODO make following code another private function and call it here:
-
-                System.out.println("Type of checkCommand: D" + diceType);
-                // still extraction of additional number is required. its done by another scanner
-                Scanner sc = new Scanner(source).useDelimiter("-");
-                if (sc.hasNextInt()) {
-                    modifier = sc.nextInt();
-                    System.out.println("Modifier:" + modifier);
-                }
+            if (s.findInLine("-") != null) {
+                int index = source.indexOf("-");
+                modifier = Integer.parseInt(source.substring(index));
+                System.out.println(modifier);
+                s.close();
+            } else if (s.findInLine("\\+") != null){
+                int index = source.indexOf("+")+1;
+                modifier = Integer.parseInt(source.substring(index));
+                System.out.println(modifier);
+                s.close();
             }
             s.close();
         }

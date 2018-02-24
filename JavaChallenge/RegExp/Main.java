@@ -7,10 +7,14 @@ public class Main {
         DiceResultGenerator diceResultGenerator = new DiceResultGenerator();
         //diceResultGenerator.diceRoll("20D4");
         //diceResultGenerator.diceRoll("20D4+5");
-        diceResultGenerator.diceRoll("20D4-37");
-        diceResultGenerator.diceRoll("D4-55");
-        diceResultGenerator.diceRoll("D3-55");
-        diceResultGenerator.diceRoll("12D3-55");
+        diceResultGenerator.throwModifier("20D4-37");
+        diceResultGenerator.throwModifier("D4-56");
+        diceResultGenerator.throwModifier("D3-42");
+        diceResultGenerator.throwModifier("12D3-25");
+        diceResultGenerator.throwModifier("20D4+37");
+        diceResultGenerator.throwModifier("D4+56");
+        diceResultGenerator.throwModifier("D3+42");
+        diceResultGenerator.throwModifier("12D3+25");
     }
 
 }
