@@ -8,7 +8,15 @@ public class DiceResultGenerator {
     private int diceType;
     private int modifier;
 
-    public DiceResultGenerator() {
+    public DiceResultGenerator(String src) {
+        diceNumber(src);
+        diceType(src);
+        throwModifier(src);
+    }
+
+    public void printValues(){
+        System.out.println("No. of dices: " + this.numberOfDices + ", dice type: " + this.diceType
+                + ", throw modifier: " + this.modifier);
     }
 
     public static boolean checkCommand(String source) {
@@ -21,11 +29,11 @@ public class DiceResultGenerator {
             // number of dices is located between index 0 and "D". If "D" is first then there is one checkCommand
             Scanner sNumberOfDices = new Scanner(source).useDelimiter("D");
             if (sNumberOfDices.hasNextInt()) {
-                System.out.println("Number of dices: " + numberOfDices);
+                //System.out.println("Number of dices: " + numberOfDices);
                 numberOfDices = sNumberOfDices.nextInt();
                 sNumberOfDices.close();
             } else {
-                System.out.println("Number of dices: " + numberOfDices);
+                //System.out.println("Number of dices: " + numberOfDices);
                 numberOfDices = 1;
                 sNumberOfDices.close();
             }
@@ -60,7 +68,7 @@ public class DiceResultGenerator {
         }
     }
 
-    public void throwModifier(String source) {
+    private void throwModifier(String source) {
         if (checkCommand(source)) {
             // here the input String meets requirements of regular expression
             // now it has to be decided is there + or - in the expression
@@ -68,15 +76,14 @@ public class DiceResultGenerator {
             if (s.findInLine("-") != null) {
                 int index = source.indexOf("-");
                 modifier = Integer.parseInt(source.substring(index));
-                System.out.println(modifier);
                 s.close();
             } else if (s.findInLine("\\+") != null){
                 int index = source.indexOf("+")+1;
                 modifier = Integer.parseInt(source.substring(index));
-                System.out.println(modifier);
+                s.close();
+            } else {
                 s.close();
             }
-            s.close();
         }
     }
 }

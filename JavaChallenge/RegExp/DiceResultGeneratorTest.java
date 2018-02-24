@@ -22,10 +22,10 @@ public class DiceResultGeneratorTest {
         this.pass = output;
     }
 
-    @Before
-    public void setup(){
-        diceRoll = new DiceResultGenerator();
-    }
+//    @Before
+//    public void setup(){
+//        diceRoll = new DiceResultGenerator();
+//    }
 
     @Parameterized.Parameters
     public static Collection<Object[]> testConditions(){
@@ -50,7 +50,7 @@ public class DiceResultGeneratorTest {
     }
 
     @Test
-    public void dice() {
-        assertEquals(pass, diceRoll.dice(diceCommand));
+    public void checkCommand() {
+        diceRoll = new DiceResultGenerator(diceCommand);
     }
 }
