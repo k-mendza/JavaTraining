@@ -1,5 +1,6 @@
 package com.karmen;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class DiceResultGenerator {
@@ -85,6 +86,19 @@ public class DiceResultGenerator {
                 s.close();
             }
         }
+    }
+
+    public int randomThrow(){
+        int sumOfThrows = 0;
+        for (int i = 1;i<=numberOfDices;i++){
+            Random rand = new Random();
+            int randomNum = rand.nextInt(diceType)+1;
+            System.out.println("Random number "+i+" is: " + randomNum);
+            sumOfThrows = sumOfThrows + randomNum;
+            System.out.println("Sum is: " + sumOfThrows);
+        }
+        System.out.println("************************************************");
+        return sumOfThrows + modifier;
     }
 }
 

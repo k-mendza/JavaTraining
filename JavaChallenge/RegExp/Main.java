@@ -6,11 +6,11 @@ public class Main {
 
         DiceResultGenerator diceResultGenerator1 = new DiceResultGenerator("20D4-37");
         diceResultGenerator1.printValues();
-        DiceResultGenerator diceResultGenerator2 = new DiceResultGenerator("D4-56");
+        DiceResultGenerator diceResultGenerator2 = new DiceResultGenerator("D6-56");
         diceResultGenerator2.printValues();
-        DiceResultGenerator diceResultGenerator3 = new DiceResultGenerator("D3-42");
+        DiceResultGenerator diceResultGenerator3 = new DiceResultGenerator("D8-42");
         diceResultGenerator3.printValues();
-        DiceResultGenerator diceResultGenerator4 = new DiceResultGenerator("12D3-25");
+        DiceResultGenerator diceResultGenerator4 = new DiceResultGenerator("12D12-25");
         diceResultGenerator4.printValues();
         DiceResultGenerator diceResultGenerator5 = new DiceResultGenerator("20D4+37");
         diceResultGenerator5.printValues();
@@ -20,7 +20,10 @@ public class Main {
         diceResultGenerator7.printValues();
         DiceResultGenerator diceResultGenerator8 = new DiceResultGenerator("12D3+25");
         diceResultGenerator8.printValues();
-
+        System.out.println(diceResultGenerator1.randomThrow());
+        System.out.println(diceResultGenerator2.randomThrow());
+        System.out.println(diceResultGenerator3.randomThrow());
+        System.out.println(diceResultGenerator4.randomThrow());
     }
 
 }
