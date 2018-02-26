@@ -1,5 +1,6 @@
 package com.karmen;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -20,6 +21,18 @@ public class DiceResultGenerator {
                 + ", throw modifier: " + this.modifier);
     }
 
+    public int getNumberOfDices() {
+        return this.numberOfDices;
+    }
+
+    public int getDiceType() {
+        return this.diceType;
+    }
+
+    public int getModifier() {
+        return this.modifier;
+    }
+
     public static boolean checkCommand(String source) {
         String pattern = "(\\d+)?D(3|4|6|8|100|12|20|10)((\\+|-)\\d+)?";
         return source.matches(pattern);
@@ -28,15 +41,16 @@ public class DiceResultGenerator {
     private void diceNumber(String source) {
         if (checkCommand(source)) {
             // number of dices is located between index 0 and "D". If "D" is first then there is one checkCommand
-            Scanner sNumberOfDices = new Scanner(source).useDelimiter("D");
-            if (sNumberOfDices.hasNextInt()) {
-                //System.out.println("Number of dices: " + numberOfDices);
-                numberOfDices = sNumberOfDices.nextInt();
-                sNumberOfDices.close();
-            } else {
-                //System.out.println("Number of dices: " + numberOfDices);
+
+            if (source.matches("^D.*")){
                 numberOfDices = 1;
-                sNumberOfDices.close();
+            } else {
+                Scanner sNumberOfDices = new Scanner(source).useDelimiter("D");
+                if (sNumberOfDices.hasNextInt()) {
+                    //System.out.println("Number of dices: " + numberOfDices);
+                    numberOfDices = sNumberOfDices.nextInt();
+                    sNumberOfDices.close();
+                }
             }
         } else {
             System.out.println("This is not a correct String!");
