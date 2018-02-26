@@ -1,13 +1,10 @@
 package com.karmen;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,13 +25,6 @@ public class DiceResultGeneratorTest {
         this.output3 = otp3;
     }
 
-//    @Before
-//    public void setup(){
-//        diceRoll = new DiceResultGenerator();
-//    }
-
-
-
     @Parameterized.Parameters
     public static Iterable<Object[]> testConditions(){
         return Arrays.asList(new Object[][] {
@@ -45,18 +35,12 @@ public class DiceResultGeneratorTest {
                 {"2D4", 2, 4 ,0},
                 {"20D5", 0, 0, 0},
                 {"200D6", 200, 6, 0},
+                {"200D6+500", 200, 6, 500},
+                {"200D6*500", 0, 0, 0},
                 {"D8", 1, 8, 0},
                 {"2D10", 2, 10, 0},
                 {"20D12", 20, 12, 0},
                 {"200D20", 200, 20, 0}
-//                {"200D20+", false},
-//                {"200D20-", false},
-//                {"200D20+1", true},
-//                {"200D20-1", true},
-//                {"200D20+10", true},
-//                {"200D20-10", true},
-//                {"200D20+100", true},
-//                {"200D20-100", true}
         });
     }
 
