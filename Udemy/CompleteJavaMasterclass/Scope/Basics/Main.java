@@ -6,10 +6,13 @@ public class Main {
 
 	    String privateVar = "this is private to main()";
 	    ScopeCheck scopeInstance = new ScopeCheck();
-        System.out.println("scopeInstance privateVar is " + scopeInstance.getPrivateVar());
-        System.out.println(privateVar);
-        scopeInstance.timesTwo();
-        ScopeCheck.InnerClass innerClass = scopeInstance.new InnerClass();
-        innerClass.timesTwo();
+	    scopeInstance.useInner();
+	    ScopeCheck.InnerClass innerClass = scopeInstance.new InnerClass();
+        System.out.println("varThree is not accessible here " /*+ innerClass.varThree*/);
+//        System.out.println("scopeInstance varThree is " + scopeInstance.getVarOne());
+//        System.out.println(privateVar);
+//        scopeInstance.timesTwo();
+//        ScopeCheck.InnerClass innerClass = scopeInstance.new InnerClass();
+//        innerClass.timesTwo();
     }
 }
