@@ -12,7 +12,7 @@ public class Password {
         return pass ^ key;
     }
 
-    public void storePassword() {
+    public final void storePassword() {
         System.out.println("Password saved as: " + this.encryptedPassword);
     }
 
