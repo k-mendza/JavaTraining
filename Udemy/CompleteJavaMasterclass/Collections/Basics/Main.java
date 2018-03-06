@@ -1,7 +1,9 @@
 package udemy.completeJavaMasterclass;
 
+import java.time.chrono.ThaiBuddhistEra;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Main {
@@ -20,12 +22,36 @@ public class Main {
             System.out.println("Seat is already reserved");
         }
 
+        List<Theatre.Seat> reverseSeats = new ArrayList<>(theatre.getSeats());
+        Collections.reverse(reverseSeats);
+        printList(reverseSeats);
+
+        System.out.println("*=_=*=_=*=_PRICE LIST*=_=*=_=*=_");
+
+        List<Theatre.Seat> priceSeats = new ArrayList<>(theatre.getSeats());
+
+        /**
+         * Please note that elements added to List have key assigned when created and then sorted by key.
+         * Example: list.add("ZZZ"); // key 0
+         *          list.add("AAA");// key 1
+         *          Collections.sort(list, key);
+         *
+         * Print: ZZZ
+         *        AAA
+         * Makes sense to write comparator and sort list before printing
+         */
+
+        priceSeats.add(theatre.new Seat("B00", 13.00));
+        priceSeats.add(theatre.new Seat("A00", 13.00));
+        Collections.sort(priceSeats, Theatre.PRICE_ORDER);
+        printList(priceSeats);
+
     // end of main()
     }
 
     public static void printList(List<Theatre.Seat> list){
         for (Theatre.Seat seat : list){
-            System.out.println(" " + seat.getSeatNumber() + seat.getPrice());
+            System.out.println(" " + seat.getSeatNumber() +" "+ seat.getPrice()+" PLN");
         }
         System.out.println();
         System.out.println("===============================================================");
