@@ -23,6 +23,18 @@ public class MapTest {
 
         System.out.println("====================");
 
+
+        //languages.remove("C++");
+        // to remove you have to enter both key and entry
+        if (languages.remove("C++", "a compiled fast, high level, object orientated")){
+            System.out.println("C++ removed");
+        } else {
+            System.out.println("C++ not removed");
+        }
+
+        System.out.println(languages.replace("Java", "this is java desc. replacement", " Trolololor"));
+        System.out.println(languages.replace("C++", "this is C++ desc. replacement"));
+
         for (String key : languages.keySet()) {
             System.out.println(key + " : " + languages.get(key));
         }
