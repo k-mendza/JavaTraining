@@ -36,6 +36,12 @@ public final class HeavenlyBody {
         if (this == o) return true;
         if (o == null || o.getClass() != this.getClass()) return false;
         String oName = ((HeavenlyBody) o).getName();
+        System.out.println("My equals called");
         return this.name.equals(oName);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.name.hashCode()+57;
     }
 }
