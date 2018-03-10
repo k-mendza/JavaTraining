@@ -29,5 +29,15 @@ public class Main {
         HeavenlyBody tempMoon = new HeavenlyBody("Moon", 27);
         solarSystem.put(tempMoon.getName(), tempMoon);
         temp.addMoon(tempMoon);
+
+        System.out.println("Planets");
+        for (HeavenlyBody planet : plantes){
+            System.out.println("\t" + planet.getName());
+        }
+        HeavenlyBody body = solarSystem.get("Venus");
+        System.out.println("Moons of " + body.getName());
+        for (HeavenlyBody moon : body.getSatellites()){
+            System.out.println("\t" + moon.getName());
+        }
     }
 }
