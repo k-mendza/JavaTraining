@@ -36,12 +36,6 @@ public final class HeavenlyBody {
         if (this == o) return true;
         if (o == null || o.getClass() != this.getClass()) return false;
         String oName = ((HeavenlyBody) o).getName();
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(name, orbitalPeriod, satellites);
+        return this.name.equals(oName);
     }
 }
