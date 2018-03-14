@@ -14,23 +14,23 @@ public class Main {
         // there is no way to get value from set
         // sets are very fast
 
-        HeavenlyBody temp = new HeavenlyBody("Mercury", 88);
+        HeavenlyBody temp = new Planet("Mercury", 88);
         solarSystem.put(temp.getName(), temp);
         planets.add(temp);
 
-        temp = new HeavenlyBody("Venus", 225);
+        temp = new Planet("Venus", 225);
         solarSystem.put(temp.getName(), temp);
         planets.add(temp);
 
-        temp = new HeavenlyBody("Earth", 365);
+        temp = new Planet("Earth", 365);
         solarSystem.put(temp.getName(), temp);
         planets.add(temp);
 
-        HeavenlyBody tempMoon = new HeavenlyBody("Moon", 27);
+        HeavenlyBody tempMoon = new Moon("Moon", 27);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        temp.addMoon(tempMoon);
+        temp.addSatellite(tempMoon);
 
-        temp = new HeavenlyBody("Pluto", 248);
+        temp = new Planet("Pluto", 248);
         solarSystem.put(temp.getName(), temp);
         planets.add(temp);
 
@@ -44,20 +44,30 @@ public class Main {
             System.out.println("\t" + moon.getName());
         }
 
-        HeavenlyBody pluto = new HeavenlyBody("Pluto", 842);
+        HeavenlyBody pluto = new DwarfPlanet("Pluto", 842){
+
+        };
         planets.add(pluto);
 
         for (HeavenlyBody planet : planets){
-            System.out.println(planet.getName() + ": " + planet.getOrbitalPeriod());
+            System.out.println(planet);
+            //System.out.println(planet.getName() + ": " + planet.getOrbitalPeriod());
         }
+
         /**
          * HashSet and HashMap store values with the same hashcodes in the same buckets.
          * It is possible then to use method equals() when looking for duplicates to check wrong bucket
          * and not see the right value. If 2 records have are the same they have to have the same hashcode
          */
 
-        Object o = new Object();
-        System.out.println(o.equals(o));
-        System.out.println("pluto".equals("pluto"));
+//        Object o = new Object();
+//        System.out.println(o.equals(o));
+//        System.out.println("pluto".equals("pluto"));
+
+        HeavenlyBody earth1 = new Planet("Earth",365);
+        HeavenlyBody earth2 = new Planet("Earth",365);
+        System.out.println(earth1.equals(earth2));
+        System.out.println(earth2.equals(earth1));
+
     }
 }
