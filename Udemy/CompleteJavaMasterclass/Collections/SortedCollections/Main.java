@@ -38,6 +38,12 @@ public class Main {
         sellItem(karBasket, "Car", 1);
         sellItem(karBasket, "Spanner", 1);
         System.out.println(karBasket);
+
+        sellItem(karBasket, "Juice", 4);
+        sellItem(karBasket, "Cup", 12);
+        sellItem(karBasket, "Phone", 1);
+        System.out.println(karBasket);
+        System.out.println(stockList);
     }
 
     public static int sellItem(Basket basket, String item, int quantity){
