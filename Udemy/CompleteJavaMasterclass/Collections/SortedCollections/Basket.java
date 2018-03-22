@@ -1,16 +1,19 @@
 package udemy.completeJavaMasterclass;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Basket {
     private final String name;
     private final Map<StockItem, Integer> list;
 
+    /**
+     * TreeMap puts more strain on the CPU due to the fact that it calls compareTo each time new item is put into TreeMap
+     */
     public Basket(String name) {
         this.name = name;
-        this.list = new HashMap<>();
+        this.list = new TreeMap<>();
     }
 
     public int addToBasket(StockItem item, int quantity){

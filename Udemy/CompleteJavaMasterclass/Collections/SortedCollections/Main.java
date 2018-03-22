@@ -1,5 +1,7 @@
 package udemy.completeJavaMasterclass;
 
+import java.util.Map;
+
 public class Main {
     private static StockList stockList = new StockList();
 
@@ -35,7 +37,10 @@ public class Main {
         System.out.println(karBasket);
         sellItem(karBasket, "Car", 1);
         System.out.println(karBasket);
-        sellItem(karBasket, "Car", 1);
+
+        if (sellItem(karBasket, "Car", 1) != 1){
+            System.out.println("There are no more cars in stock");
+        }
         sellItem(karBasket, "Spanner", 1);
         System.out.println(karBasket);
 
@@ -44,6 +49,17 @@ public class Main {
         sellItem(karBasket, "Phone", 1);
         System.out.println(karBasket);
         System.out.println(stockList);
+
+//        temp = new StockItem("Pen", 1.12, 1);
+//        stockList.Items().put(temp.getName(), temp);
+        stockList.Items().get("Car").adjustStock(2000);
+        stockList.Items().get("Car").adjustStock(-1000);
+        System.out.println(stockList);
+
+        for (Map.Entry<String, Double> price : stockList.PriceList().entrySet()){
+            System.out.println(price.getKey() + " costs " + price.getValue());
+        }
+
     }
 
     public static int sellItem(Basket basket, String item, int quantity){
