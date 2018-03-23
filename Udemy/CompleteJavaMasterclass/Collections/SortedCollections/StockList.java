@@ -17,7 +17,6 @@ public class StockList {
             if (inStock != item) {
                 item.adjustStock(inStock.availableQuantity());
             }
-
             list.put(item.getName(), item);
             return item.availableQuantity();
         }
@@ -25,11 +24,41 @@ public class StockList {
     }
 
     public int sellStock(String item, int quantity){
-        StockItem inStock = list.getOrDefault(item, null);
+        StockItem inStock = list.get(item);
 
-        if ((inStock != null) && (inStock.availableQuantity() >= quantity) && (quantity > 0)){
-            inStock.adjustStock(-quantity);
-            return quantity;
+        if ((inStock != null) && (quantity > 0)){
+            return inStock.finaliseStock(quantity);
+        }
+        return 0;
+//        StockItem inStock = list.getOrDefault(item, null);
+//
+//        if ((inStock != null) && (inStock.availableQuantity() >= quantity) && (quantity > 0)){
+//            inStock.adjustStock(-quantity);
+//            return quantity;
+//        }
+//        return 0;
+    }
+
+    public int reserveStock(String item, int quantity){
+        StockItem inStock = list.get(item);
+
+        if ((inStock != null) && (quantity > 0)){
+            return inStock.reserveStock(quantity);
+        }
+        return 0;
+    }
+
+    /**
+     * Method for unreserving stock
+     * @param item
+     * @param quantity
+     * @return quantity of unreserved stock
+     */
+    public int unreserveStock(String item, int quantity){
+        StockItem inStock = list.get(item);
+
+        if ((inStock != null) && (quantity > 0)){
+            return inStock.unreserveStock(quantity);
         }
         return 0;
     }
