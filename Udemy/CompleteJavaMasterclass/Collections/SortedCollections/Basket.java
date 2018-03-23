@@ -25,6 +25,10 @@ public class Basket {
         return 0;
     }
 
+    public void clearBasket(){
+        this.list.clear();
+    }
+
     public int removeFromBasket(StockItem item, int quantity){
         if ((item != null) && (quantity > 0)){
             // check if we have the item in the basket
