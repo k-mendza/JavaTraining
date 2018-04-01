@@ -1,23 +1,21 @@
 package udemy.completeJavaMasterclass;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Locations implements Map<Integer, Location> {
-    private static Map<Integer, Location> locations = new HashMap<Integer, Location>();
-
+    private static Map<Integer, Location> locations = new LinkedHashMap<>();
 
     public static void main(String[] args) throws IOException {
         // alternative way of writing previous code
-        try(FileWriter locFile = new FileWriter("locations.txt");
-            FileWriter dirFile = new FileWriter("directions.txt")){
+        try(BufferedWriter locFile = new BufferedWriter(new FileWriter("locations.txt"));
+            BufferedWriter dirFile = new BufferedWriter(new FileWriter("directions.txt"))){
             for(Location location : locations.values()){
                 locFile.write(location.getLocationID() + ", " + location.getDescription() + "\n");
-                for (String direction : location.getExits().keySet()){
-                    dirFile.write(location.getLocationID() + ", " + direction +", "+ location.getExits().get(direction) + "\n");
+                for (String direction : location.getExits().keySet()) {
+                    if (!direction.equalsIgnoreCase("Q")){
+                        dirFile.write(location.getLocationID() + ", " + direction + ", " + location.getExits().get(direction) + "\n");
+                }
                 }
                 // here closing operations are done automatically
             }
@@ -26,7 +24,7 @@ public class Locations implements Map<Integer, Location> {
 
     static {
         // reading from file with try block with resources
-        try (Scanner scanner = new Scanner(new FileReader("locations.txt"))){
+        try (Scanner scanner = new Scanner(new BufferedReader(new FileReader("locations.txt")))){
             scanner.useDelimiter(",");
             while (scanner.hasNextLine()){
                 int loc = scanner.nextInt();
