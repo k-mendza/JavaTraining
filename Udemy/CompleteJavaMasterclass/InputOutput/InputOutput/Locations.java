@@ -28,36 +28,63 @@ public class Locations implements Map<Integer, Location> {
 
 
     static {
-        // reading from file with try block with resources
-        try (Scanner scanner = new Scanner(new BufferedReader(new FileReader("locations.txt")))){
-            scanner.useDelimiter(",");
-            while (scanner.hasNextLine()){
-                int loc = scanner.nextInt();
-                scanner.skip(scanner.delimiter());
-                String desc = scanner.nextLine();
-                System.out.println("Imported loc: " + loc + " - " + desc);
-                Map<String, Integer> tempExit = new HashMap<>();
-                locations.put(loc, new Location(loc, desc, tempExit));
+
+        try (DataInputStream locFile = new DataInputStream(new BufferedInputStream(new FileInputStream("locations.dat")))){
+            boolean eof = false;
+            while(!eof){
+                try{
+                    Map<String, Integer> exits = new LinkedHashMap<>();
+                    int locID = locFile.readInt();
+                    String desc = locFile.readUTF();
+                    int numExits = locFile.readInt();
+                    System.out.println("Read location " + locID + " : " + desc);
+                    System.out.println("Found " + numExits + " exits");
+                    for (int i=0; i<numExits; i++){
+                        String direction = locFile.readUTF();
+                        int destination = locFile.readInt();
+                        exits.put(direction, destination);
+                        System.out.println("\t\t" + direction + "," + destination);
+                    }
+                    locations.put(locID, new Location(locID, desc, exits));
+                } catch (EOFException e) {
+                    eof = true;
+                }
+
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        try (BufferedReader dirFile = new BufferedReader(new FileReader("directions.txt"))){
-            String input;
-            while ((input = dirFile.readLine()) != null) {
-                String[] data = input.split(", ");
-                int loc = Integer.parseInt(data[0]);
-                String direction = data[1];
-                int destination = Integer.parseInt(data[2]);
-                System.out.println(loc + ": " + direction + ": " + destination);
-                Location location = locations.get(loc);
-                location.addExit(direction, destination);
-            }
-        } catch (IOException e){
-           e.printStackTrace();
-        }
     }
+//        // reading from file with try block with resources
+//        try (Scanner scanner = new Scanner(new BufferedReader(new FileReader("locations.txt")))){
+//            scanner.useDelimiter(",");
+//            while (scanner.hasNextLine()){
+//                int loc = scanner.nextInt();
+//                scanner.skip(scanner.delimiter());
+//                String desc = scanner.nextLine();
+//                System.out.println("Imported loc: " + loc + " - " + desc);
+//                Map<String, Integer> tempExit = new HashMap<>();
+//                locations.put(loc, new Location(loc, desc, tempExit));
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try (BufferedReader dirFile = new BufferedReader(new FileReader("directions.txt"))){
+//            String input;
+//            while ((input = dirFile.readLine()) != null) {
+//                String[] data = input.split(", ");
+//                int loc = Integer.parseInt(data[0]);
+//                String direction = data[1];
+//                int destination = Integer.parseInt(data[2]);
+//                System.out.println(loc + ": " + direction + ": " + destination);
+//                Location location = locations.get(loc);
+//                location.addExit(direction, destination);
+//            }
+//        } catch (IOException e){
+//           e.printStackTrace();
+//        }
+//    }
 
     @Override
     public int size() {
