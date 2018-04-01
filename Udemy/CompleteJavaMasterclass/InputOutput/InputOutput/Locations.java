@@ -22,55 +22,27 @@ public class Locations implements Map<Integer, Location> {
                 // here closing operations are done automatically
             }
         }
-//        // File has to be declared here because of scope!
-//        FileWriter locFile = null;
-//        try {
-//            locFile = new FileWriter("locations.txt");
-//            for (Location location : locations.values()) {
-//                locFile.write(location.getLocationID() + "," + location.getDescription() + "\n");
-//            }
-//        } finally {
-//            if (locFile != null) {
-//                System.out.println("Closing the locFile");
-//                locFile.close();
-//            }
-//        }
     }
 
     static {
-        // reading from file
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(new FileReader("locations.txt"));
+        // reading from file with try block with resources
+        try (Scanner scanner = new Scanner(new FileReader("locations.txt"))){
             scanner.useDelimiter(",");
             while (scanner.hasNextLine()){
                 int loc = scanner.nextInt();
                 scanner.skip(scanner.delimiter());
                 String desc = scanner.nextLine();
-                System.out.println("Imported loc: " + loc + ": " + desc);
+                System.out.println("Imported loc: " + loc + " - " + desc);
                 Map<String, Integer> tempExit = new HashMap<>();
                 locations.put(loc, new Location(loc, desc, tempExit));
             }
-            scanner.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (scanner != null){
-                scanner.close();
-            }
         }
 
-
-        try {
-            scanner = new Scanner(new BufferedReader(new FileReader("directions.txt")));
-            scanner.useDelimiter(", ");
-            while (scanner.hasNextLine()) {
-//                int loc = scanner.nextInt();
-//                String direction = scanner.next();
-//                scanner.skip(scanner.delimiter());
-//                String dest = scanner.nextLine();
-//                int destination = Integer.parseInt(dest);
-                String input = scanner.nextLine();
+        try (BufferedReader dirFile = new BufferedReader(new FileReader("directions.txt"))){
+            String input;
+            while ((input = dirFile.readLine()) != null) {
                 String[] data = input.split(", ");
                 int loc = Integer.parseInt(data[0]);
                 String direction = data[1];
@@ -81,39 +53,9 @@ public class Locations implements Map<Integer, Location> {
             }
         } catch (IOException e){
            e.printStackTrace();
-        } finally {
-            if (scanner != null){
-                scanner.close();
-            }
+        }
     }
-//        Map<String, Integer> tempExit = new HashMap<String, Integer>();
-//        locations.put(0, new Location(0, "You are sitting in front of a computer learning Java",null));
-//
-//        tempExit = new HashMap<String, Integer>();
-//        tempExit.put("W", 2);
-//        tempExit.put("E", 3);
-//        tempExit.put("S", 4);
-//        tempExit.put("N", 5);
-//        locations.put(1, new Location(1, "You are standing at the end of a road before a small brick building",tempExit));
-//
-//        tempExit = new HashMap<String, Integer>();
-//        tempExit.put("N", 5);
-//        locations.put(2, new Location(2, "You are at the top of a hill",tempExit));
-//
-//        tempExit = new HashMap<String, Integer>();
-//        tempExit.put("W", 1);
-//        locations.put(3, new Location(3, "You are inside a building, a well house for a small spring",tempExit));
-//
-//        tempExit = new HashMap<String, Integer>();
-//        tempExit.put("N", 1);
-//        tempExit.put("W", 2);
-//        locations.put(4, new Location(4, "You are in a valley beside a stream",tempExit));
-//
-//        tempExit = new HashMap<String, Integer>();
-//        tempExit.put("S", 1);
-//        tempExit.put("W", 2);
-//        locations.put(5, new Location(5, "You are in the forest",tempExit));
-    }
+
     @Override
     public int size() {
         return locations.size();

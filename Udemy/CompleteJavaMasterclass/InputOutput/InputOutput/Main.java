@@ -17,7 +17,6 @@ public class Main {
         vocabulary.put("WEST", "W");
         vocabulary.put("EAST", "E");
 
-
         int loc = 1;
         while(true) {
             System.out.println(locations.get(loc).getDescription());
