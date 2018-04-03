@@ -5,15 +5,45 @@ import java.util.*;
 
 public class Locations implements Map<Integer, Location> {
     private static Map<Integer, Location> locations = new LinkedHashMap<>();
+    private static Map<Integer, IndexRecord> index = new LinkedHashMap<>();
 
     public static void main(String[] args) throws IOException {
-        try (ObjectOutputStream locFile = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("locations.dat")))) {
-            for (Location location : locations.values()){
-                locFile.writeObject(location);
-            }
-        }
 
+
+        // implementation  of RandomAccessFile
+        try (RandomAccessFile rao = new RandomAccessFile("locations_random.dat", "rwd")) {
+               rao.writeInt(locations.size());
+               int indexSize = locations.size() * 3 * Integer.BYTES;
+               int locationStart = (int) (indexSize + rao.getFilePointer() + Integer.BYTES);
+               rao.writeInt(locationStart);
+               long indexStart = rao.getFilePointer();
+               int startPointer = locationStart;
+               rao.seek(startPointer);
+
+               for (Location location : locations.values()){
+                   rao.writeInt(location.getLocationID());
+                   rao.writeUTF(location.getDescription());
+                   StringBuilder builder = new StringBuilder();
+                   for (String direction : location.getExits().keySet()){
+                       if (!direction.equalsIgnoreCase("Q")) {
+                           builder.append(direction);
+                           builder.append(",");
+                           builder.append(location.getExits().get(direction));
+                           builder.append(",");
+                       }
+                   }
+                   rao.writeUTF(builder.toString());
+
+                   IndexRecord record = new IndexRecord(startPointer, (int) (rao.getFilePointer() - startPointer));
+                   index.put(location.getLocationID(), record);
+
+                   startPointer = (int) rao.getFilePointer();
+               }
+
+        }
     }
+
+
     //1. This first four bytes will contain the number of locations (bytes 0-3)
     //2. This four bytes will contain the start offset of the locations section (bytes 4-7)
     //3. The next section of the file will contain the index (the index is 1692 bytes long)
