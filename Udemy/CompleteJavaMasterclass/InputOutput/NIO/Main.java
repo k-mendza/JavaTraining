@@ -1,4 +1,4 @@
-package com.timbuchalka;
+package com.karmen;
 
 import java.util.HashMap;
 import java.util.Map;

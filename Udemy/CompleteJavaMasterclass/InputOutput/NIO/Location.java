@@ -1,4 +1,4 @@
-package com.timbuchalka;
+package com.karmen;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;

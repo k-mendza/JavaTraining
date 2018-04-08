@@ -1,4 +1,4 @@
-package com.timbuchalka;
+package com.karmen;
 
 import java.io.*;
 import java.nio.file.FileSystems;
@@ -21,7 +21,7 @@ public class Locations implements Map<Integer, Location> {
                 for (String direction : location.getExits().keySet()){
                     if (!direction.equalsIgnoreCase("Q")) {
                         dirFile.write(location.getLocationID() + "," + direction + " ,"
-                        + location.getExits().get(direction + "\n"));
+                        + location.getExits().get(direction) + "\n");
                     }
                 }
             }
@@ -32,27 +32,22 @@ public class Locations implements Map<Integer, Location> {
     }
 
     static {
+        Path locPath = FileSystems.getDefault().getPath("locations_big.txt");
+        Path dirPath = FileSystems.getDefault().getPath("directions_big.txt");
 
-        try(ObjectInputStream locFile = new ObjectInputStream(new BufferedInputStream(new FileInputStream("locations.dat")))) {
-            boolean eof = false;
-            while (!eof) {
-                try {
-                    Location location = (Location) locFile.readObject();
-                    System.out.println("Read location " + location.getLocationID() + " : " + location.getDescription());
-                    System.out.println("Found " + location.getExits().size() + " exits");
-
-                    locations.put(location.getLocationID(), location);
-                } catch (EOFException e) {
-                    eof = true;
-                }
+        try (Scanner scanner = new Scanner(Files.newBufferedReader(locPath))){
+            scanner.useDelimiter(",");
+            while (scanner.hasNextLine()) {
+                int loc = scanner.nextInt();
+                scanner.skip().delimiter();
+                String desc = scanner.nextLine();
+                System.out.println("Imported loc: " + loc + ": " + desc);
+                locations.put(loc, new Location(loc, desc, null));
             }
-        } catch(InvalidClassException e) {
-            System.out.println("InvalidClassException " + e.getMessage());
-        } catch(IOException io) {
-            System.out.println("IO Exception " + io.getMessage());
-        } catch(ClassNotFoundException e) {
-            System.out.println("ClassNotFoundException " + e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
 
     @Override
