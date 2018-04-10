@@ -13,82 +13,39 @@ public class Main {
             FileChannel binChannel = binFile.getChannel();
 
             ByteBuffer byteBuffer = ByteBuffer.allocate(100);
+//            byte outputBytes[] = "Hello World!".getBytes();
+//            byte outputBytes2[] = "Nice to meet you".getBytes();
+//            byteBuffer.put(outputBytes).putInt(245).putInt(-987654321).put(outputBytes2).putInt(1000);
+//            byteBuffer.flip();
+
             byte outputBytes[] = "Hello World!".getBytes();
             byteBuffer.put(outputBytes);
+            long intPos1 = outputBytes.length;
             byteBuffer.putInt(245);
+            long intPos2 = intPos1 + Integer.BYTES;
             byteBuffer.putInt(-987654321);
             byte outputBytes2[] = "Nice to meet you".getBytes();
             byteBuffer.put(outputBytes2);
+            long intPos3 = intPos2 + Integer.BYTES + outputBytes2.length;
             byteBuffer.putInt(1000);
             byteBuffer.flip();
+
             binChannel.write(byteBuffer);
 
-
-
-//            ByteBuffer buffer = ByteBuffer.allocate(outputBytes.length);
-//            buffer.put(outputBytes);
-//            buffer.flip();
-//            int numBytes = binChannel.write(buffer);
-//            System.out.println("numBytes = " + numBytes);
-//
-//            ByteBuffer intBuffer = ByteBuffer.allocate(Integer.BYTES);
-//            intBuffer.putInt(245);
-//            intBuffer.flip();
-//            numBytes = binChannel.write(intBuffer);
-//            System.out.println("numBytes = " + numBytes);
-//
-//            intBuffer.flip(); // first flip to reset buffer position
-//            intBuffer.putInt(-987654321);
-//            intBuffer.flip(); // second flip to reset buffer position
-//            numBytes = binChannel.write(intBuffer);
-//            System.out.println("numBytes = " + numBytes);
-//
-//            RandomAccessFile randomAccessFile = new RandomAccessFile("data.dat", "rwd");
-//            FileChannel channel = randomAccessFile.getChannel();
-//            outputBytes[0] = 'a';
-//            outputBytes[1] = 'b';
-//            buffer.flip();
-//            long numBytesRead = channel.read(buffer);
-//            if (buffer.hasArray()) {
-//                //System.out.println("byte buffer = " + new String(buffer.array()));
-//                System.out.println("byte buffer = " + new String(outputBytes));
-//            }
-//
-//            // Absolute read
-//            System.out.println("Absolute READ START");
-//            intBuffer.flip();
-//            numBytesRead = channel.read(intBuffer);
-//            System.out.println(intBuffer.getInt(0));
-//            intBuffer.flip();
-//            numBytesRead = channel.read(intBuffer);
-//            intBuffer.flip();
-//            System.out.println(intBuffer.getInt(0));
-//            System.out.println(intBuffer.getInt());
-//            System.out.println("Absolute READ STOP");
-
-            // Relative read
-//            intBuffer.flip();
-//            numBytesRead = channel.read(intBuffer);
-//            intBuffer.flip();
-//            System.out.println(intBuffer.getInt());
-//            intBuffer.flip();
-//            numBytesRead = channel.read(intBuffer);
-//            intBuffer.flip();
-//            System.out.println(intBuffer.getInt());
-//            channel.close();
-//            randomAccessFile.close();
-
-//            RandomAccessFile randomAccessFile = new RandomAccessFile("data.dat", "rwd");
-//            byte[] bytes = new byte[outputBytes.length];
-//            randomAccessFile.read(bytes);
-//            System.out.println(new String(bytes));
-//
-//            // reading integers
-//            long int1 = randomAccessFile.readInt();
-//            long int2 = randomAccessFile.readInt();
-//            System.out.println(int1);
-//            System.out.println(int2);
-
+            RandomAccessFile randomAccessFile = new RandomAccessFile("data.dat", "rwd");
+            FileChannel channel = randomAccessFile.getChannel();
+            ByteBuffer readBuffer = ByteBuffer.allocate(100);
+            channel.read(readBuffer);
+            readBuffer.flip();
+            byte inputString[] = new byte[outputBytes.length];
+            readBuffer.get(inputString);
+            System.out.println("input String = " + new String(inputString));
+            System.out.println("int1 = " + readBuffer.getInt());
+            System.out.println("int2 = " + readBuffer.getInt());
+            byte inputString2[] = new byte[outputBytes2.length];
+            readBuffer.get(inputString2);
+            System.out.println("inputString2 = " + new String(inputString2));
+            System.out.println("int3 = " + readBuffer.getInt());
 
         } catch (IOException e) {
             e.printStackTrace();
