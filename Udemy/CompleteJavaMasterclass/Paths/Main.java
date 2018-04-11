@@ -14,9 +14,14 @@ public class Main {
         Path path = FileSystems.getDefault().getPath("WorkingDirectoryFile.txt");
         printFile(path);
 
-        Path filePath = FileSystems.getDefault().getPath("files","SubdirectoryFile.txt");
+        Path filePath = Paths.get(".", "files", "SubdirectoryFile.txt");
         printFile(filePath);
 
+        filePath = Paths.get(".");
+        System.out.println(filePath.toAbsolutePath());
+
+        Path path1 = FileSystems.getDefault().getPath(".", "files", "..", "files", "SubdirectoryFile.txt");
+        System.out.println(path1.normalize().toAbsolutePath());
     }
 
     private static void printFile(Path path){
