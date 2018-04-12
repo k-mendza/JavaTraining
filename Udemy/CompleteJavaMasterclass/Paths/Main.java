@@ -9,6 +9,9 @@ public class Main {
 
     public static void main(String[] args) {
         try {
+            Path pathOfFileToBeCreated = FileSystems.getDefault().getPath("Examples", "file1.txt");
+            Files.createFile(pathOfFileToBeCreated);
+
             Path pathOfFileToBeCopied = FileSystems.getDefault().getPath("Examples", "file1.txt");
             Path destinationPath = FileSystems.getDefault().getPath("Examples", "file1copy.txt");
             Files.copy(pathOfFileToBeCopied, destinationPath);
@@ -23,11 +26,10 @@ public class Main {
             pathOfFileToBeDeleted = FileSystems.getDefault().getPath("Examples", "file1copyMoved.txt");
             Files.deleteIfExists(pathOfFileToBeDeleted);
 
+            pathOfFileToBeDeleted = FileSystems.getDefault().getPath("Examples", "file1.txt");
+            Files.deleteIfExists(pathOfFileToBeDeleted);
 
-
-
-
-//            Path sourceFile = FileSystems.getDefault().getPath("Examples", "file1.txt");
+            //            Path sourceFile = FileSystems.getDefault().getPath("Examples", "file1.txt");
 //            Path copyFile = FileSystems.getDefault().getPath("Examples", "file1copy.txt");
 //            Files.copy(sourceFile, copyFile, StandardCopyOption.REPLACE_EXISTING);
 //
