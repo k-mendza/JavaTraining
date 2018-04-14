@@ -10,19 +10,49 @@ public class Main {
     public static void main(String[] args) {
         try {
             URL url = new URL("http://example.org");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Mozilla");
+            int responseCode = connection.getResponseCode();
+            System.out.println("Server response code = " + responseCode);
+            connection.setReadTimeout(5000);
 
-            URLConnection urlConnection = url.openConnection();
-            urlConnection.setDoOutput(true);
-            urlConnection.connect();
-
-            BufferedReader inputStream = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-
+            if (responseCode != 200) {
+                System.out.println("Error reading the page");
+                System.out.println(connection.getResponseMessage());
+                return;
+            }
+            BufferedReader inputReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String line = "";
-            while (line != null) {
-                line = inputStream.readLine();
+            while ((line = inputReader.readLine()) != null) {
+                line = inputReader.readLine();
                 System.out.println(line);
             }
-            inputStream.close();
+            inputReader.close();
+
+//            URLConnection.setDoOutput(true);
+//            urlConnection.connect();
+//
+//            BufferedReader inputStream = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+//
+//            Map<String, List<String>> headerFields = urlConnection.getHeaderFields();
+//            for (Map.Entry<String, List<String>> entry : headerFields.entrySet()) {
+//                String key = entry.getKey();
+//                List<String> value = entry.getValue();
+//                System.out.println("-----key = " + key);
+//                for (String string : value) {
+//                    System.out.println("value = " + value);
+//                }
+//            }
+
+//            String line = "";
+//            while (line != null) {
+//                line = inputStream.readLine();
+//                System.out.println(line);
+//            }
+//            inputStream.close();
+
+
             /**
              * URI is divided into 2 parts: one is the base URI and the second is the finishing directory. In this way
              * it is easy to change only the last part of the URI leaving the base untouched.
