@@ -11,6 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         try(Socket socket = new Socket("localhost",5000)){ // localhost or 127.0.0.1
+            socket.setSoTimeout(5000);
             BufferedReader echos = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter stringToEcho = new PrintWriter(socket.getOutputStream(), true);
             Scanner scanner = new Scanner(System.in);
