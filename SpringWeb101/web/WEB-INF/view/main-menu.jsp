@@ -5,6 +5,6 @@
     SPRING MVC DEMO
 </h2>
 <hr>
-<a href="/showForm">Hello World from</a>
+<a href="hello//showForm">Hello World from</a>
 </body>
 </html>
