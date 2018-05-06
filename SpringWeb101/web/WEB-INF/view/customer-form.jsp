@@ -16,11 +16,15 @@
     User data: <br><br>
     <form:form action="processForm" modelAttribute="customer">
         First name: <form:input path="firstName"/>
+        <form:errors path="firstName" cssClass="error"/>
         <br><br>
         Last name*: <form:input path="lastName"/>
         <form:errors path="lastName" cssClass="error"/>
-        <input type="submit" value="Submit"/>
+        <br><br>
+        Free passes: <form:input path="freePasses"/>
+        <form:errors path="freePasses" cssClass="error"/>
+        <br><br>
+        <td><button type="submit">Submit</button></td>
     </form:form>
-
 </body>
 </html>
