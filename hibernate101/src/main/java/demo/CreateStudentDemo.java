@@ -13,11 +13,10 @@ public class CreateStudentDemo {
     public static void main(String[] args) {
 //        Student myStudent = new Student("Carlos", "Santana", "carlos@test.com");
 //        insertStudentIntoDB(myStudent);
-        List<Student> allStudents = getAllStudentsFromDB();
-
-        for (Object obj : allStudents) {
-            System.out.println(obj);
-        }
+        List<Student> myStudents = getStudentsFromDBbyQuery("FROM Student");
+        printList(myStudents);
+        myStudents = getStudentsFromDBbyQuery("FROM Student s WHERE s.email like '%@test.com'");
+        printList(myStudents);
     }
 
     private static void insertStudentIntoDB(Student student){
@@ -38,7 +37,7 @@ public class CreateStudentDemo {
         }
     }
 
-    private static Student getStudentFromDB(int studentId){
+    private static Student getStudentFromDBbyId(int studentId){
         SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Student.class)
                 .buildSessionFactory();
@@ -57,7 +56,7 @@ public class CreateStudentDemo {
         return student;
     }
 
-    private static List<Student> getAllStudentsFromDB(){
+    private static List<Student> getStudentsFromDBbyQuery(String query){
         SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Student.class)
                 .buildSessionFactory();
@@ -66,7 +65,7 @@ public class CreateStudentDemo {
         List<Student> studentsList = new ArrayList<>();
         try {
             session.beginTransaction();
-            studentsList = session.createQuery("from Student").getResultList();
+            studentsList = session.createQuery(query).getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,5 +73,11 @@ public class CreateStudentDemo {
             sessionFactory.close();
         }
         return studentsList;
+    }
+
+    private static void printList(List<Student> list){
+        for (Object obj : list) {
+            System.out.println(obj);
+        }
     }
 }
