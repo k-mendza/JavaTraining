@@ -17,6 +17,9 @@ public class CreateStudentDemo {
         printList(myStudents);
         myStudents = getStudentsFromDBbyQuery("FROM Student s WHERE s.email like '%@test.com'");
         printList(myStudents);
+        updateStudentNameFromDB(1, "Paul");
+        myStudents = getStudentsFromDBbyQuery("FROM Student");
+        printList(myStudents);
     }
 
     private static void insertStudentIntoDB(Student student){
@@ -73,6 +76,25 @@ public class CreateStudentDemo {
             sessionFactory.close();
         }
         return studentsList;
+    }
+
+    private static void updateStudentNameFromDB(int studentId, String name){
+        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Student.class)
+                .buildSessionFactory();
+
+        Session session = sessionFactory.getCurrentSession();
+        Student student = new Student();
+        try {
+            session.beginTransaction();
+            student = session.get(Student.class, studentId);
+            student.setFirstName(name);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sessionFactory.close();
+        }
     }
 
     private static void printList(List<Student> list){
