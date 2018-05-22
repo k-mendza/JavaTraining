@@ -20,6 +20,7 @@ public class CreateStudentDemo {
         updateStudentNameFromDB(1, "Paul");
         myStudents = getStudentsFromDBbyQuery("FROM Student");
         printList(myStudents);
+
     }
 
     private static void insertStudentIntoDB(Student student){
@@ -89,6 +90,23 @@ public class CreateStudentDemo {
             session.beginTransaction();
             student = session.get(Student.class, studentId);
             student.setFirstName(name);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sessionFactory.close();
+        }
+    }
+
+    private static void deleteStudentsFromDBbyId(int studentId){
+        SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Student.class)
+                .buildSessionFactory();
+
+        Session session = sessionFactory.getCurrentSession();
+        try {
+            session.beginTransaction();
+            session.createQuery("delete from Student where id=" + studentId);
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
